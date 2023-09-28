@@ -6,8 +6,9 @@ function App() {
   const [singlePlayer, setSinglePlayer] = useState(null);
 
   useEffect(()=>{
+    async () => {
     setAllPlayers = fetchAllPlayers();
-    console.log(allPlayers);
+    console.log(allPlayers);}
   }, [])
 
 
