@@ -27,12 +27,16 @@
   }
   .details-button{
     background-color: chartreuse;
+    margin-right: 7px;
+    margin-left: 5px;
   }
   .delete-button{
     background-color: red;
   }
   .close-button{
     background-color: yellow;
+    margin-right: 7px;
+    margin-left: 5px;
   }
   .player {
     border-style:double;

@@ -34,6 +34,7 @@ export function RenderSinglePlayer({ singlePlayerID }) {
                 <p>Team: {player.teamId}</p>
                 <p>Cohort: {player.cohortId}</p>
                 <button className='close-button' onClick={() => handleReturn()}>Return</button>
+                <button className='delete-button'>Delete</button>
             </div>
         );
     }

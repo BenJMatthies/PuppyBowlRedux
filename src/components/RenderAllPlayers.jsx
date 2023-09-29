@@ -38,7 +38,6 @@ export function RenderAllPlayers({ setSinglePlayerID }) {
                             <p>Breed: {player.breed}</p>
                             <p>Cohort: {player.cohortId}</p>
                             <button className='details-button' onClick={() => handleDetails(player.id)}>See Details</button>
-                            <button className='delete-button'>Delete Player</button>
                         </div>
                     );
                 })}
