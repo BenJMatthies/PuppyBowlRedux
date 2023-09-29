@@ -1,0 +1,43 @@
+*{
+    padding: 5px;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+  
+  body{
+    background-color: gray;
+  }
+  
+  h1{
+    color:yellow;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: center;
+  }
+  h2{
+    color:blue;
+  }
+  #main-header{
+    background-color: black;
+    width: 50%;
+    margin-left: 25%;
+  }
+  .details-button{
+    background-color: chartreuse;
+  }
+  .delete-button{
+    background-color: red;
+  }
+  .close-button{
+    background-color: yellow;
+  }
+  .player {
+    border-style:double;
+    background-color:lightgoldenrodyellow;
+    margin: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
+  .player:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
+  }

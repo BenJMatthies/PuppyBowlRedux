@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Routes, Route, Router, useNavigate } from 'react-router-dom';
 import { fetchAllPlayersApi, fetchSinglePlayerApi } from './Api';
+import './styles.css';
 
 
 
@@ -27,12 +28,9 @@ function RenderAllPlayers({ setSinglePlayerID }) {
   useEffect(() => {
     async function fetchAllPlayers() {
       try {
-        // const response = await fetch(APIURL + "/players");
-        // const players = await response.json();
-        // // console.log(players);
-        // setAllPlayers(players.data.players);
         const players = await fetchAllPlayersApi();
         setAllPlayers(players);
+        console.log(players);
         setIsLoading(false);
       } catch (err) {
         console.error('Uh oh, trouble fetching players!', err);
@@ -56,7 +54,7 @@ function RenderAllPlayers({ setSinglePlayerID }) {
                 <img src={player.imageUrl} width={300}></img>
                 <h2>Name: {player.name}</h2>
                 <p>Breed: {player.breed}</p>
-                <p>Team: {player.teamId}</p>
+                <p>Cohort: {player.cohortId}</p>
                 <button className='details-button' onClick={() => handleDetails(player.id)}>See Details</button>
                 <button className='delete-button'>Delete Player</button>
               </div>
