@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { fetchAllPlayersB } from './Api';
 
 
 
@@ -28,11 +27,19 @@ function App() {
   console.log(`All Players:`);
   console.log(allPlayers)
 
-  return ((
-    <>
-      <RenderSinglePlayerSummary player={allPlayers[0]}/>
-    </>
-  ))
+  // if(allPlayers!=undefined){
+  // return ((
+  //   <>
+  //     <div className='player'>
+  //       <h2>Name: {player.name}</h2>
+  //       <p>Breed: {player.breed}</p>
+  //       <p>Team: {player.teamId}</p>
+  //       <button className='details-button'>See Details</button>
+  //       <button className='delete-button'>Delete Player</button>
+  //     </div>
+  //     {/* <RenderSinglePlayerSummary player={allPlayers[0]}/> */}
+  //   </>
+  // ))}
 }
 
 function RenderAllPlayers({ allPlayers }) {
