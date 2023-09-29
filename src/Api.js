@@ -23,12 +23,13 @@ export const fetchAllPlayersApi = async () => {
  * @param playerId The database ID of the player to GET data for
  * @returns an object with the requested player data
  */
-export const fetchSinglePlayer = async (playerId) => {
+export const fetchSinglePlayerApi = async (playerId) => {
     try {
-        getURL = `${APIURL}/players/${playerId}`;
+        const getURL = `${APIURL}/players/${playerId}`;
+        console.log(getURL);
         const response = await fetch(getURL);
         const player = await response.json();
-        return player;
+        return player.data.player;
     } catch (err) {
         console.error(`Oh no, trouble fetching player #${playerId}!`, err);
     }

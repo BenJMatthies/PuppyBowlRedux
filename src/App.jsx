@@ -1,17 +1,28 @@
-import { useEffect, useState } from 'react'
-import { fetchAllPlayersApi } from './Api';
+import { useEffect, useState } from 'react';
+import { Routes, Route, Router, useNavigate } from 'react-router-dom';
+import { fetchAllPlayersApi, fetchSinglePlayerApi } from './Api';
 
 
 
 function App() {
+  const [singlePlayerID, setSinglePlayerID] = useState("");
+
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<RenderAllPlayers setSinglePlayerID={setSinglePlayerID} />}></Route>
+        <Route path="/singlePlayer" element={<RenderSinglePlayer singlePlayerID={singlePlayerID} />}></Route>
+      </Routes>
+    </>
+  )
+
+}
+
+function RenderAllPlayers({ setSinglePlayerID }) {
   const [allPlayers, setAllPlayers] = useState([]);
-  const [singlePlayer, setSinglePlayer] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
-  const cohortName = '2302-acc-pt-web-pt-b';
-  // Use the APIURL variable for fetch requests
-  const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/`;
+  const naviagte = useNavigate();
 
   useEffect(() => {
     async function fetchAllPlayers() {
@@ -30,61 +41,104 @@ function App() {
     fetchAllPlayers();
   }, [])
 
-  // console.log(`All Players:`);
-  // console.log(allPlayers)
 
   if (!isLoading) {
-    return ((
-      <RenderAllPlayers allPlayers={allPlayers} />
-      // <>
-      //   <div>
-      //     {allPlayers.map((player) => {
-      //       return (
-      //         <div>
-      //           <h2>Name: {player.name}</h2>
-      //           <p>Breed: {player.breed}</p>
-      //           <p>Team: {player.teamId}</p>
-      //         </div>
-      //       )
-      //     })}
-      //   </div>
-      // </>
-    ))
+    function handleDetails(playerId) {
+      setSinglePlayerID(playerId);
+      naviagte("/singlePlayer");
+    }
+    return (
+      <>
+        <div>
+          {allPlayers.map((player) => {
+            return (
+              <div key={player.id}>
+                <img src={player.imageUrl}></img>
+                <h2>Name: {player.name}</h2>
+                <p>Breed: {player.breed}</p>
+                <p>Team: {player.teamId}</p>
+                <button className='details-button' onClick={() => handleDetails(player.id)}>See Details</button>
+                <button className='delete-button'>Delete Player</button>
+              </div>
+            )
+          })}
+        </div>
+      </>
+    )
   }
 }
 
-function RenderAllPlayers({ allPlayers }) {
-  return (
-    <>
-      <div>
-        {allPlayers.map((player) => {
-          return (
-            <div key={player.id}>
-              <h2>Name: {player.name}</h2>
-              <p>Breed: {player.breed}</p>
-              <p>Team: {player.teamId}</p>
-              <button className='details-button'>See Details</button>
-              <button className='delete-button'>Delete Player</button>
-            </div>
-          )
-        })}
-      </div>
-    </>
-  )
+function RenderSinglePlayer({ singlePlayerID }) {
+  const [player, setPlayer] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  // console.log(singlePlayerID);
+
+  useEffect(() => {
+    async function fetchSinglePlayer() {
+      const data = await fetchSinglePlayerApi(singlePlayerID);
+      setPlayer(data);
+      setIsLoading(false);
+      // console.log(data);
+    }
+    fetchSinglePlayer();
+  }, []);
+
+  if (!isLoading) {
+    return (
+      <>
+        <div key={player.id}>
+          <img src={player.imageUrl}></img>
+          <h2>Name: {player.name}!</h2>
+          <p>Breed: {player.breed}</p>
+          <p>Status: {player.status}</p>
+          <p>Created: {player.createdAt}</p>
+          <p>Updated: {player.updatedAt}</p>
+          <p>Team: {player.teamId}</p>
+          <p>Cohort: {player.cohortId}</p>
+          {/* <p><img src="${player.imageUrl}" width="150" /></p>
+          <button class="close-button">Close Details</button> */}
+        </div>
+      </>
+    )
+  }
 }
 
-async function RenderSinglePlayerSummary({ player }) {
+// function RenderSinglePlayer({ playerId }) {
+//   const [player, setPlayer] = useState({});
+//   const [isLoading, setIsLoading] = useState(true);
 
-  const receivedPlayer = await player;
-  return (
-    <div className='player'>
-      <h2>Name: {receivedPlayer.name}</h2>
-      <p>Breed: {receivedPlayer.breed}</p>
-      <p>Team: {receivedPlayer.teamId}</p>
-      <button className='details-button'>See Details</button>
-      <button className='delete-button'>Delete Player</button>
-    </div>
-  )
-}
+//   console.log(playerId);
+//   useEffect(() => {
+//     async function fetchSinglePlayer() {
+//       try {
+//         const data = fetchSinglePlayerApi(playerId);
+//         console.log(data);
+//         setPlayer(data);
+//         setIsLoading(false);
+//       }
+//       catch (e) {
+//         console.error('Uh oh, trouble fetching player!', e);
+//       }
+//     }
+//     fetchSinglePlayer();
+//   })
+
+//   return (
+//     <>
+//       <div key={player.id}>
+//         <h2>Name: ${player.name}!</h2>
+//         <p>Breed: ${player.breed}</p>
+//         <p>Status: ${player.status}</p>
+//         <p>Created: ${player.createdAt}</p>
+//         <p>Updated: ${player.updatedAt}</p>
+//         <p>Team: ${player.teamId}</p>
+//         <p>Cohort: ${player.cohortId}</p>
+//         <p><img src="${player.imageUrl}" width="150" /></p>
+//         <button class="close-button">Close Details</button>
+//       </div>
+//     </>
+//   )
+// }
 
 export default App
