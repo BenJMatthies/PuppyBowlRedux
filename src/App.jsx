@@ -50,7 +50,7 @@ function RenderAllPlayers({ setSinglePlayerID }) {
         <div>
           {allPlayers.map((player) => {
             return (
-              <div key={player.id}>
+              <div className='player' key={player.id}>
                 <img src={player.imageUrl} width={300}></img>
                 <h2>Name: {player.name}</h2>
                 <p>Breed: {player.breed}</p>
@@ -70,7 +70,7 @@ function RenderSinglePlayer({ singlePlayerID }) {
   const [player, setPlayer] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
-  // console.log(singlePlayerID);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchSinglePlayer() {
@@ -83,9 +83,13 @@ function RenderSinglePlayer({ singlePlayerID }) {
   }, []);
 
   if (!isLoading) {
+    function handleReturn(){
+      navigate("/");
+    }
+
     return (
       <>
-        <div key={player.id}>
+        <div className='player' key={player.id}>
           <img src={player.imageUrl} width={300}></img>
           <h2>Name: {player.name}!</h2>
           <p>Breed: {player.breed}</p>
@@ -94,50 +98,11 @@ function RenderSinglePlayer({ singlePlayerID }) {
           <p>Updated: {player.updatedAt}</p>
           <p>Team: {player.teamId}</p>
           <p>Cohort: {player.cohortId}</p>
-
-          {/* <p><img src="${player.imageUrl}" width="150" /></p>
-          <button class="close-button">Close Details</button> */}
+          <button className='close-button' onClick={()=>handleReturn()}>Return</button>
         </div>
       </>
     )
   }
 }
-
-// function RenderSinglePlayer({ playerId }) {
-//   const [player, setPlayer] = useState({});
-//   const [isLoading, setIsLoading] = useState(true);
-
-//   console.log(playerId);
-//   useEffect(() => {
-//     async function fetchSinglePlayer() {
-//       try {
-//         const data = fetchSinglePlayerApi(playerId);
-//         console.log(data);
-//         setPlayer(data);
-//         setIsLoading(false);
-//       }
-//       catch (e) {
-//         console.error('Uh oh, trouble fetching player!', e);
-//       }
-//     }
-//     fetchSinglePlayer();
-//   })
-
-//   return (
-//     <>
-//       <div key={player.id}>
-//         <h2>Name: ${player.name}!</h2>
-//         <p>Breed: ${player.breed}</p>
-//         <p>Status: ${player.status}</p>
-//         <p>Created: ${player.createdAt}</p>
-//         <p>Updated: ${player.updatedAt}</p>
-//         <p>Team: ${player.teamId}</p>
-//         <p>Cohort: ${player.cohortId}</p>
-//         <p><img src="${player.imageUrl}" width="150" /></p>
-//         <button class="close-button">Close Details</button>
-//       </div>
-//     </>
-//   )
-// }
 
 export default App
