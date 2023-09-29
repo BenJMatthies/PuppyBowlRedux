@@ -1,34 +1,50 @@
 import { useEffect, useState } from 'react'
-import { fetchAllPlayers } from './Api';
+import { fetchAllPlayersB } from './Api';
+
+
 
 function App() {
   const [allPlayers, setAllPlayers] = useState([]);
-  const [singlePlayer, setSinglePlayer] = useState(null);
 
-  useEffect(()=>{
-    async () => {
-    setAllPlayers = fetchAllPlayers();
-    console.log(allPlayers);}
+  // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
+  const cohortName = '2302-acc-pt-web-pt-b';
+  // Use the APIURL variable for fetch requests
+  const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/`;
+
+  useEffect(() => {
+    async function fetchAllPlayers() {
+      try {
+        const response = await fetch(APIURL + "/players");
+        const players = await response.json();
+        // console.log(players);
+        setAllPlayers(players.data.players);
+      } catch (err) {
+        console.error('Uh oh, trouble fetching players!', err);
+      }
+    }
+    fetchAllPlayers();
   }, [])
 
+  console.log(`All Players:`);
+  console.log(allPlayers)
 
   return ((
     <>
-      <RenderAllPlayers allPlayer={allPlayers} setAllPlayers={setAllPlayers}/>
+      <RenderSinglePlayerSummary player={allPlayers[0]}/>
     </>
   ))
 }
 
-function RenderAllPlayers({allPlayers, setAllPlayers}) {
-  
-  
+function RenderAllPlayers({ allPlayers }) {
+
+
   <return>(
-    {allPlayers.map(player => <RenderPlayerAll player={player} />)}
+    {allPlayers.map(player => <RenderSinglePlayerSummary player={player} />)}
     )</return>
 
 }
 
-function RenderPlayerAll({ player }) {
+function RenderSinglePlayerSummary({ player }) {
 
   return (
     <div className='player'>
