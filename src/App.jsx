@@ -53,7 +53,7 @@ function RenderAllPlayers({ setSinglePlayerID }) {
           {allPlayers.map((player) => {
             return (
               <div key={player.id}>
-                <img src={player.imageUrl}></img>
+                <img src={player.imageUrl} width={300}></img>
                 <h2>Name: {player.name}</h2>
                 <p>Breed: {player.breed}</p>
                 <p>Team: {player.teamId}</p>
@@ -88,7 +88,7 @@ function RenderSinglePlayer({ singlePlayerID }) {
     return (
       <>
         <div key={player.id}>
-          <img src={player.imageUrl}></img>
+          <img src={player.imageUrl} width={300}></img>
           <h2>Name: {player.name}!</h2>
           <p>Breed: {player.breed}</p>
           <p>Status: {player.status}</p>
@@ -96,6 +96,7 @@ function RenderSinglePlayer({ singlePlayerID }) {
           <p>Updated: {player.updatedAt}</p>
           <p>Team: {player.teamId}</p>
           <p>Cohort: {player.cohortId}</p>
+
           {/* <p><img src="${player.imageUrl}" width="150" /></p>
           <button class="close-button">Close Details</button> */}
         </div>
